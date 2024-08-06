@@ -12,9 +12,7 @@ namespace CalculatorProgram
 
         static void InsideOfCalculator()
         {
-            //Kullanıcıdan iki sayı alıyoruz sonra (+,-,*,/) giriyor ve işlem yapıyoruz. tüm işlemler için ayrı ayrı metot aç return.
-            //Buna sadece girilen değerin metin olup olmamasını eklicem. gerisi tamam sanırım kontrol ederim yine.
-
+            
             string sayi1, sayi2;
             double s1, s2;
             bool correctChar = true;
@@ -34,48 +32,46 @@ namespace CalculatorProgram
             sayi2 = Console.ReadLine();
             bool sayiMi2 = double.TryParse(sayi2, out s2);
 
+            while (!(sayiMi1 && sayiMi2))
+            {
+                Console.WriteLine("Lütfen sayısal değer giriniz:");
+                sayi1 = Console.ReadLine();
+                sayiMi1 = double.TryParse(sayi1, out s1);
+                sayi2 = Console.ReadLine();
+                sayiMi2 = double.TryParse(sayi2, out s2);
+            }
+            
             Console.WriteLine("| Lütfen yapılacak işlemi giriniz (+, -, * ,/)        |");
             char islem = Console.ReadKey(true).KeyChar;
 
-
             while (correctChar)
             {
-                if (!sayiMi1 || !sayiMi2)
-                {
-                    Console.WriteLine("Lütfen sayısal değer giriniz:");
-                    sayi1 = Console.ReadLine();
-                    sayiMi1 = double.TryParse(sayi1, out s1);
-                    sayi2 = Console.ReadLine();
-                    sayiMi2 = double.TryParse(sayi2, out s2);
-                }
-                else
-                {
-                    if (!(islem == '+' || islem == '-' || islem == '*' || islem == '/'))
-                    {
-                        Console.WriteLine("| Lütfen geçerli bir işlem değeri giriniz (+, -, * ,/)  |");
-                        islem = Console.ReadKey(true).KeyChar;
-                    }
-                    else if (islem == '+')
-                    {
-                        Console.WriteLine($"| Sonuc = {Plus(ref s1, ref s2, ref islem)}                                          |");
-                        correctChar = false;
 
-                    }
-                    else if (islem == '-')
-                    {
-                        Console.WriteLine($"| Sonuc = {Minus(ref s1, ref s2, ref islem)}                                          |");
-                        correctChar = false;
-                    }
-                    else if (islem == '*')
-                    {
-                        Console.WriteLine($"| Sonuc = {Cross(ref s1, ref s2, ref islem)}                                          |");
-                        correctChar = false;
-                    }
-                    else if (islem == '/')
-                    {
-                        Console.WriteLine($"| Sonuc = {Division(ref sayi2, ref s1, ref s2, ref islem)}                                          |");
-                        correctChar = false;
-                    }
+                if (!(islem == '+' || islem == '-' || islem == '*' || islem == '/'))
+                {
+                    Console.WriteLine("| Lütfen geçerli bir işlem değeri giriniz (+, -, * ,/)  |");
+                    islem = Console.ReadKey(true).KeyChar;
+                }
+                else if (islem == '+')
+                {
+                    Console.WriteLine($"| Sonuc = {Plus(ref s1, ref s2, ref islem)}                                          |");
+                    correctChar = false;
+
+                }
+                else if (islem == '-')
+                {
+                    Console.WriteLine($"| Sonuc = {Minus(ref s1, ref s2, ref islem)}                                          |");
+                    correctChar = false;
+                }
+                else if (islem == '*')
+                {
+                    Console.WriteLine($"| Sonuc = {Cross(ref s1, ref s2, ref islem)}                                          |");
+                    correctChar = false;
+                }
+                else if (islem == '/')
+                {
+                    Console.WriteLine($"| Sonuc = {Division(ref sayi2, ref s1, ref s2, ref islem)}                                          |");
+                    correctChar = false;
                 }
 
             }
@@ -83,7 +79,7 @@ namespace CalculatorProgram
             calculatorFrame2();
         }
 
-        
+
         static double Division(ref string sayi2, ref double s1, ref double s2, ref char islem)
         {
             if (s2 == 0)

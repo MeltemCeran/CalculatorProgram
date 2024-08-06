@@ -2,6 +2,7 @@
 using System.Diagnostics.Metrics;
 using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CalculatorProgram_V_1._0
 {
@@ -11,267 +12,142 @@ namespace CalculatorProgram_V_1._0
         {
             InsideOfCalculator();
 
-            //Kopya();
-        }
-
-        private static void Kopya()
-        {
-            calculatorFrame1();
-
-            double s1;
-            double s2;
-            double sonuc;
-
-
-
-            string text = Console.ReadLine();
-
-            int indexesittir = text.IndexOf('=');
-
-            if (text.EndsWith('='))
-            {
-                //buraya metod çağırabi
-            }
-
-            if (!(text.Contains('+') || text.Contains('-') || text.Contains('*') || text.Contains('/')))
-            {
-                Console.WriteLine("Geçersiz giriş yaptınız.");
-            }
-            if (!text.Contains('='))
-            {
-                Console.WriteLine("Geçersiz giriş yaptınız.");
-            }
-
-            if (text.Contains('+'))
-            {
-                int indexarti = text.IndexOf('+');
-                string ilkKisim = text.Substring(0, indexarti);
-                string ikinciKisim = text.Substring(indexarti + 1, indexesittir - indexarti - 1);
-                bool sayiMis1 = double.TryParse(ilkKisim, out s1);
-                bool sayiMis2 = double.TryParse(ikinciKisim, out s2);
-
-                if (sayiMis1 && sayiMis2)
-                {
-                    Console.WriteLine(sonuc = s1 + s2);
-                }
-                else
-                {
-                    Console.WriteLine("Lütfen sayısal değer giriniz:");
-                }
-
-            }
-            else if (text.Contains('-'))
-            {
-                int indexeksi = text.IndexOf('-');
-
-                string ilkKisim = text.Substring(0, indexeksi);
-                string ikinciKisim = text.Substring(indexeksi + 1, indexesittir - indexeksi - 1);
-                bool sayiMis1 = double.TryParse(ilkKisim, out s1);
-                bool sayiMis2 = double.TryParse(ikinciKisim, out s2);
-
-                if (sayiMis1 && sayiMis2)
-                {
-                    Console.WriteLine(sonuc = s1 - s2);
-                }
-                else
-                {
-                    Console.WriteLine("Lütfen sayısal değer giriniz:");
-                }
-
-            }
-            else if (text.Contains('*'))
-            {
-                int indexcarpi = text.IndexOf('*');
-
-                string ilkKisim = text.Substring(0, indexcarpi);
-                string ikinciKisim = text.Substring(indexcarpi + 1, indexesittir - indexcarpi - 1);
-                bool sayiMis1 = double.TryParse(ilkKisim, out s1);
-                bool sayiMis2 = double.TryParse(ikinciKisim, out s2);
-
-                if (sayiMis1 && sayiMis2)
-                {
-                    Console.WriteLine(sonuc = s1 * s2);
-                }
-                else
-                {
-                    Console.WriteLine("Lütfen sayısal değer giriniz:");
-                }
-
-
-            }
-            else if (text.Contains('/'))
-            {
-
-                int indexbolum = text.IndexOf('/');
-
-                string ilkKisim = text.Substring(0, indexbolum);
-                string ikinciKisim = text.Substring(indexbolum + 1, indexesittir - indexbolum - 1);
-                bool sayiMis1 = double.TryParse(ilkKisim, out s1);
-                bool sayiMis2 = double.TryParse(ikinciKisim, out s2);
-
-                if (!(sayiMis1 && sayiMis2))
-                {
-                    Console.WriteLine("Lütfen sayısal değer giriniz:");
-                }
-                else if (s2 == 0)
-                {
-                    Console.WriteLine("DIV/0!");
-                }
-                else
-                {
-                    Console.WriteLine(sonuc = s1 * s2);
-                }
-
-            }
-
-
-            calculatorFrame2();
         }
 
         static void InsideOfCalculator()
         {
-
+          
             calculatorFrame1();
 
-            double s1;
-            double s2;
+            double s1 = 0;
+            double s2 = 0;
             double sonuc;
-            
-            //Bunları nasıl metoda alırım?
-            //Eşittir işini yapamadım.
-            // iflerin içine break koymalı mıyım?
-            //bu arada yeni bişey öğrendim. Array.Sort(text) örn.
-            //metotlarda default parameter value diye bişey var.
+            string text = string.Empty;
 
-
-            string text = Console.ReadLine();
-
-            int indexesittir = text.IndexOf('=');
-
-            if(text.EndsWith('='))
+            while (true)
             {
-                //buraya metod çağırabi
-            }
+                var keyInfo = Console.ReadKey(true); 
 
-            if (!(text.Contains('+') || text.Contains('-') ||text.Contains('*') ||text.Contains('/')))
-            {
-                Console.WriteLine("Geçersiz giriş yaptınız.");
-            }
-            if (!text.Contains('='))
-            {
-                Console.WriteLine("Geçersiz giriş yaptınız.");
+                if (keyInfo.Key == ConsoleKey.Enter) 
+                {
+                    break;
+                }
+
+                char inputChar = keyInfo.KeyChar;
+
+                if (char.IsDigit(inputChar) || inputChar == '+' || inputChar == '-' || inputChar == '*' || inputChar == '/')
+                {
+                    if ((inputChar == '+' || inputChar == '-' || inputChar == '*' || inputChar == '/') &&
+                        (text.Contains('+') || text.Contains('-') || text.Contains('*') || text.Contains('/')))
+                    {
+                        continue; 
+                    }
+
+                    text += inputChar;
+                    Console.Write(inputChar);
+                }
+
+                if (keyInfo.Key == ConsoleKey.Backspace && text.Length > 0)
+                {
+                    text = text.Substring(0, text.Length - 1);
+                    Console.Write("\b \b");
+                }
             }
 
             if (text.Contains('+'))
-            {
-                int indexarti = text.IndexOf('+');
-                string ilkKisim = text.Substring(0, indexarti);
-                string ikinciKisim = text.Substring(indexarti + 1, indexesittir - indexarti - 1);
-                bool sayiMis1 = double.TryParse(ilkKisim, out s1);
-                bool sayiMis2 = double.TryParse(ikinciKisim, out s2);
-               
-                if (sayiMis1 && sayiMis2)
-                {
-                    Console.WriteLine(sonuc = s1 + s2);
-                }
-                else
-                {
-                    Console.WriteLine("Lütfen sayısal değer giriniz:");
-                }
+            {//
 
+                Plus(text);
             }
-            else if (text.Contains('-')) 
+            else if (text.Contains('-'))
             {
-                int indexeksi = text.IndexOf('-');
-
-                string ilkKisim = text.Substring(0, indexeksi);
-                string ikinciKisim = text.Substring(indexeksi + 1, indexesittir - indexeksi - 1);
-                bool sayiMis1 = double.TryParse(ilkKisim, out s1);
-                bool sayiMis2 = double.TryParse(ikinciKisim, out s2);
-
-                if (sayiMis1 && sayiMis2)
-                {
-                    Console.WriteLine(sonuc = s1 - s2);
-                }
-                else
-                {
-                    Console.WriteLine("Lütfen sayısal değer giriniz:");
-                }
-
+               Minus(text);
             }
             else if (text.Contains('*'))
             {
-                int indexcarpi = text.IndexOf('*');
+                Cross(text);
 
-                string ilkKisim = text.Substring(0, indexcarpi);
-                string ikinciKisim = text.Substring(indexcarpi + 1, indexesittir - indexcarpi - 1);
-                bool sayiMis1 = double.TryParse(ilkKisim, out s1);
-                bool sayiMis2 = double.TryParse(ikinciKisim, out s2);
-
-                if (sayiMis1 && sayiMis2)
-                {
-                    Console.WriteLine(sonuc = s1 * s2);
-                }
-                else
-                {
-                    Console.WriteLine("Lütfen sayısal değer giriniz:");
-                }
-
-                
             }
             else if (text.Contains('/'))
             {
-                
-                int indexbolum = text.IndexOf('/');
-
-                string ilkKisim = text.Substring(0, indexbolum);
-                string ikinciKisim = text.Substring(indexbolum + 1, indexesittir - indexbolum - 1);
-                bool sayiMis1 = double.TryParse(ilkKisim, out s1);
-                bool sayiMis2 = double.TryParse(ikinciKisim, out s2);
-
-                if (!(sayiMis1 && sayiMis2))
-                {
-                    Console.WriteLine("Lütfen sayısal değer giriniz:");
-                }
-                else if (s2 == 0)
-                {
-                    Console.WriteLine("DIV/0!");
-                }
-                else
-                {
-                    Console.WriteLine(sonuc = s1 * s2);
-                }
-               
+                Division(text);
             }
 
 
             calculatorFrame2();
         }
 
-        static double Division(ref double s1, ref double s2, ref char islem)
+        static void Division(string text)
         {
+            double s1;
+            double s2;
+            int indexbolum = text.IndexOf('/');
+
+            string ilkKisim = text.Substring(0, indexbolum);
+            string ikinciKisim = text.Substring(indexbolum + 1);
+            bool sayiMis1 = double.TryParse(ilkKisim, out s1);
+            bool sayiMis2 = double.TryParse(ikinciKisim, out s2);
+
             if (s2 == 0)
             {
-                Console.WriteLine("Lütfen payda için 0'dan farklı bir değer giriniz:");
-                s2 = Convert.ToDouble(Console.ReadLine());
+                Console.Write(" = DIV/0!");
             }
-
-            return (s1 / s2);
+            else
+            {
+                Console.Write($" = {s1 / s2}");
+            }
         }
 
-        static double Cross(ref double s1, ref double s2, ref char islem)
+        static void Cross(string text)
         {
-            return s1 * s2;
+            double s1;
+            double s2;
+            int indexcarpi = text.IndexOf('*');
+
+            string ilkKisim = text.Substring(0, indexcarpi);
+            string ikinciKisim = text.Substring(indexcarpi + 1);
+            bool sayiMis1 = double.TryParse(ilkKisim, out s1);
+            bool sayiMis2 = double.TryParse(ikinciKisim, out s2);
+
+            if (sayiMis1 && sayiMis2)
+            {
+                Console.Write($" = {s1 * s2}");
+            }
         }
 
-        static double Minus(ref double s1, ref double s2, ref char islem)
+        static void Minus(string text)
         {
-            return s1 - s2;
+            double s1;
+            double s2;
+            int indexeksi = text.IndexOf('-');
+
+            string ilkKisim = text.Substring(0, indexeksi);
+            string ikinciKisim = text.Substring(indexeksi + 1);
+            bool sayiMis1 = double.TryParse(ilkKisim, out s1);
+            bool sayiMis2 = double.TryParse(ikinciKisim, out s2);
+
+            if (sayiMis1 && sayiMis2)
+            {
+                Console.Write($" = {s1 - s2}");
+            }
+            
         }
 
-        static double Plus(ref double s1, ref double s2, ref char islem)
+        static void Plus(string text)
         {
-            return s1 + s2;
+            double s1;
+            double s2;
+            int indexarti = text.IndexOf('+');
+            string ilkKisim = text.Substring(0, indexarti);
+            string ikinciKisim = text.Substring(indexarti + 1);
+            bool sayiMis1 = double.TryParse(ilkKisim, out s1);
+            bool sayiMis2 = double.TryParse(ikinciKisim, out s2);
+
+            if (sayiMis1 && sayiMis2)
+            {
+                Console.Write($" = {s1 + s2}");
+            }
+           
         }
 
         static void calculatorFrame1()
@@ -295,6 +171,7 @@ namespace CalculatorProgram_V_1._0
             int edgeB = 55;  // Dikdörtgenin genişliği
             int edgeA = 4;
 
+            Console.WriteLine();
             for (int i = 0; i < edgeA - 2; i++)
             {
                 Console.Write('|');              // Sol kenar
@@ -307,6 +184,7 @@ namespace CalculatorProgram_V_1._0
 
 
         }
+
     }
-    
+
 }
